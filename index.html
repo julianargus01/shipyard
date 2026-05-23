@@ -76,7 +76,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .tdot{width:11px;height:11px;border-radius:50%}
 .tdot-r{background:#FF5F57}.tdot-y{background:#FFBC2E}.tdot-g{background:#28C840}
 .term-label{font-family:'DM Sans',sans-serif;font-size:12px;color:rgba(255,255,255,0.35);margin:0 auto;letter-spacing:0.5px}
-.term-body{padding:20px 24px 26px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:2;color:rgba(255,255,255,0.82);min-height:250px}
+.term-body{padding:20px 24px 26px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:2;color:rgba(255,255,255,0.82);height:340px;overflow:hidden}
 span.tline{display:block;white-space:pre}
 span.tc-amber{color:rgba(232,163,23,0.95)}
 span.tc-blue{color:rgba(130,190,255,0.88)}
@@ -143,15 +143,6 @@ footer{position:relative;z-index:1}
 .setup-steps code{font-family:'JetBrains Mono',monospace;background:var(--surface);padding:2px 6px;border-radius:4px;font-size:13px}
 
 /* TRANSCRIPT */
-.transcript{padding:80px 0;background:transparent}
-.transcript-area{max-width:640px;margin:48px auto 0;display:flex;flex-direction:column;gap:14px}
-.t-msg{max-width:85%;padding:14px 18px;border-radius:18px;font-size:15px;line-height:1.55}
-.t-msg.coach{background:var(--navy);color:var(--white);align-self:flex-start;border-bottom-left-radius:6px}
-.t-msg.user{background:var(--white);color:var(--text);align-self:flex-end;border-bottom-right-radius:6px;border:1px solid var(--border)}
-.t-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:4px;opacity:0.6}
-.t-msg.coach .t-label{color:var(--amber)}
-.t-msg.user .t-label{color:var(--text-sec)}
-.t-note{text-align:center;font-size:13px;color:var(--text-sec);font-style:italic;padding:8px 0}
 
 /* FOOTER */
 footer{background:var(--navy);color:rgba(255,255,255,0.8);padding:60px 0 40px;text-align:center}
@@ -379,44 +370,6 @@ footer .tagline{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px}
   </div>
 </section>
 
-<section class="transcript">
-  <div class="container">
-    <div class="section-label">Sample Session</div>
-    <h2 class="section-title">What a real coaching session looks like</h2>
-    <div class="transcript-area">
-      <div class="t-msg coach">
-        <div class="t-label">Coach</div>
-        Hi, Welcome to Shipyard! I am your coach. If you are interested in learning to build something with AI, you have come to the right place. I will take you step by step. You will build it &mdash; I will guide you and keep you honest. By the end you will have something real, done and ready to use. Ready to start?
-      </div>
-      <div class="t-msg user">
-        <div class="t-label">You</div>
-        Honestly I don't even know where to begin. I've watched so many YouTube videos and I'm more confused than when I started.
-      </div>
-      <div class="t-msg coach">
-        <div class="t-label">Coach</div>
-        Overwhelm is normal here. Too much input, no clear starting point. Here's the only thing that matters right now: we're going to pick one thing and build it. That's it.
-      </div>
-      <div class="t-msg user">
-        <div class="t-label">You</div>
-        Ok. What do I pick?
-      </div>
-      <div class="t-note">Phase 0 complete &mdash; overwhelm defused, ready to pick</div>
-      <div class="t-msg coach">
-        <div class="t-label">Coach</div>
-        We're going to build a workflow based on a folder structure &mdash; files with step-by-step instructions an AI follows so you don't have to re-prompt every time. Choose one: 1. File Organizer. 2. Brain-Dump Planner. 3. Notes. 4. Decision Helper.
-      </div>
-      <div class="t-msg user">
-        <div class="t-label">You</div>
-        Brain-dump planner. That's me every morning.
-      </div>
-      <div class="t-msg coach">
-        <div class="t-label">Coach</div>
-        Brain-Dump Planner it is. It already has a working shape &mdash; you do not build from a blank page. Your job is to make it yours: your voice, what a good result looks like for you, and the rules it uses to decide. Then we run it on your own input. Let's make it yours.
-      </div>
-      <div class="t-note">The coach continues into Phase 2: building identity.md and context.md, one field at a time&hellip;</div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="container">
