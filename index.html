@@ -133,7 +133,35 @@ footer{position:relative;z-index:1}
 .try-it{padding:80px 0;background:transparent}
 .try-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
 .chat-embed{border-radius:16px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.14),0 2px 8px rgba(0,0,0,0.08),inset 0 1px 0 rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.7);background:rgba(255,255,255,0.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.chat-embed iframe{width:100%;height:520px;border:none;display:block}
+/* ANIMATED DEMO CHAT */
+.demo-chat{display:flex;flex-direction:column;height:520px;background:#fff;font-family:'Inter',sans-serif}
+.dc-header{background:var(--navy);padding:14px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.dc-logo{font-family:'DM Sans',sans-serif;font-weight:800;font-size:16px;color:#fff}
+.dc-logo span{color:var(--amber)}
+.dc-badge{font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.2);padding:2px 9px;border-radius:20px;font-family:'DM Sans',sans-serif;letter-spacing:0.3px}
+.dc-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.dc-messages::-webkit-scrollbar{width:4px}.dc-messages::-webkit-scrollbar-track{background:transparent}.dc-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.dc-msg{display:flex;flex-direction:column;max-width:86%}
+.dc-msg.coach{align-self:flex-start}
+.dc-msg.user{align-self:flex-end}
+.dc-label{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:4px;font-family:'DM Sans',sans-serif}
+.dc-msg.coach .dc-label{color:var(--amber-dark)}
+.dc-msg.user .dc-label{color:var(--text-sec);text-align:right}
+.dc-bubble{padding:11px 14px;border-radius:12px;font-size:13.5px;line-height:1.65}
+.dc-msg.coach .dc-bubble{background:var(--navy);color:rgba(255,255,255,0.92);border-radius:4px 12px 12px 12px}
+.dc-msg.user .dc-bubble{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:12px 4px 12px 12px}
+.dc-bubble strong{font-weight:700}
+.dc-bubble code{font-family:'JetBrains Mono',monospace;font-size:12px;background:rgba(255,255,255,0.12);padding:1px 5px;border-radius:3px}
+.dc-msg.user .dc-bubble code{background:rgba(0,0,0,0.07)}
+.dc-bubble pre{font-family:'JetBrains Mono',monospace;font-size:12px;background:rgba(0,0,0,0.28);border-radius:7px;padding:10px 12px;margin-top:8px;white-space:pre-wrap;line-height:1.7;color:rgba(255,255,255,0.85)}
+.dc-msg.user .dc-bubble pre{background:rgba(0,0,0,0.06);color:var(--text)}
+.dc-typing{display:flex;align-items:center;gap:5px;padding:13px 14px}
+.dc-typing i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.45);display:inline-block;animation:dcPulse 1.3s ease-in-out infinite}
+.dc-typing i:nth-child(2){animation-delay:.18s}
+.dc-typing i:nth-child(3){animation-delay:.36s}
+@keyframes dcPulse{0%,80%,100%{transform:scale(0.65);opacity:.4}40%{transform:scale(1);opacity:1}}
+.dc-msg.fade-in{animation:dcFade .3s ease}
+@keyframes dcFade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 .setup-panel{background:rgba(255,255,255,0.50);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.80);border-radius:16px;padding:32px;box-shadow:0 4px 24px rgba(0,0,0,0.07),inset 0 1px 0 rgba(255,255,255,0.9)}
 .setup-panel h3{font-size:22px;font-weight:700;margin-bottom:16px}
 .setup-panel p{color:var(--text-sec);margin-bottom:20px;line-height:1.7}
@@ -346,10 +374,16 @@ footer .tagline{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px}
 <section class="try-it" id="try">
   <div class="container">
     <div class="section-label">Try It</div>
-    <h2 class="section-title">Talk to the Coach right now</h2>
+    <h2 class="section-title">Watch a real session</h2>
     <div class="try-grid">
       <div class="chat-embed">
-        <iframe src="https://shipyard-coach.shipyard-jul.workers.dev" loading="lazy" title="Shipyard Coach Demo"></iframe>
+        <div class="demo-chat">
+          <div class="dc-header">
+            <div class="dc-logo">SHIPYARD<span>.</span></div>
+            <span class="dc-badge">Live Demo</span>
+          </div>
+          <div class="dc-messages" id="dcMessages"></div>
+        </div>
       </div>
       <div class="setup-panel">
         <h3>Set it up yourself in 2 minutes</h3>
@@ -422,6 +456,137 @@ async function run(){
   run();
 }
 run();
+</script>
+
+<script>
+/* ── Animated demo chat ── */
+const DC_SCRIPT = [
+  {r:'coach', t:'Hi, Welcome to Shipyard! I am your coach. If you are interested in learning to build something with AI, you have come to the right place. I will take you step by step. You will build it — I will guide you and keep you honest. By the end you will have something real, done and ready to use. Ready to start?'},
+  {r:'user',  t:"I'm ready"},
+  {r:'coach', t:'We build a folder of small instruction files an agent follows — so you do not prompt it at every step. Your job is to make one yours: your voice, your judgment. Pick one:\n\n1. **File Organizer** — turn a messy folder into a clean structure.\n2. **Brain-Dump Planner** — turn everything on your mind into today\'s plan.\n3. **Notes** — turn raw notes into a clean recap.\n4. **Decision Helper** — turn a stuck decision into a clear recommendation.'},
+  {r:'user',  t:'Option two, the brain dump planner.'},
+  {r:'coach', t:'Brain-Dump Planner it is. It already has a working shape — you do not build it from a blank page. Your job is to make it yours: we go through it one piece at a time and put in your voice, what a good result looks like, and the rules it uses to decide. Then we run it on your own input. Let us make it yours.'},
+  {r:'user',  t:'ok'},
+  {r:'coach', t:'Before we build anything, your tool needs a home — one real folder on your computer. The folder is the tool. Make a folder on your desktop, name it `brain-dump-planner`, then tell me when it is done.'},
+  {r:'user',  t:'done'},
+  {r:'coach', t:'You will write two files. The first is `identity.md` — who your tool is. It holds five things: who the agent is, the tool\'s job, its voice, what a good result looks like, and what to avoid. In a moment I will walk you through making it.'},
+  {r:'user',  t:'ok'},
+  {r:'coach', t:'Create a markdown file inside your `brain-dump-planner` folder. (On Mac TextEdit: Format → Make Plain Text; save it as `identity.md`, not `.rtf`.) Leave it open and tell me when it is ready.'},
+  {r:'user',  t:'ready'},
+  {r:'coach', t:'That file is written in markdown — just plain text. Three things: `#` starts a heading, `-` starts a list item, everything else is plain text. So when you write your file, which line gets the `#`, and which get the `-`?'},
+  {r:'user',  t:'# is the header, - is a list item'},
+  {r:'coach', t:'That is markdown. First field — the role: who is this agent? One short line. Hint: something like "You are a task prioritizer."'},
+  {r:'user',  t:'You are a master thought organizer'},
+  {r:'coach', t:'Solid. Now write just that field in markdown here:\n\n```\n# Identity\n\n## Role\n[who the agent is]\n```'},
+  {r:'user',  t:'```\n# Identity\n\n## Role\nYou are a master thought organizer\n```'},
+  {r:'coach', t:'That is the right shape. Paste it into `identity.md`, save, and tell me when it\'s done. Then we do the next field.'},
+  {r:'user',  t:'done'},
+  {r:'coach', t:'This file talks to the agent as "you." Next field — what you do: in one sentence, what does the tool do when it runs? Hint: say what goes in and what comes out.'},
+  {r:'user',  t:'You take the user\'s random thoughts and organize them into a coherent action plan.'},
+  {r:'coach', t:'That\'s the job line — input to output, addressed to the agent. Write just that field in markdown:\n\n```\n## What you do\n[your job sentence]\n```'},
+  {r:'user',  t:'```\n## What you do\nYou take the user\'s random thoughts and organize them into a coherent action plan.\n```'},
+  {r:'coach', t:'Well-formed. Paste it under the role section, save, and tell me when it\'s done.'},
+  {r:'user',  t:'done'},
+  {r:'coach', t:'Next — the voice: how your tool sounds when it hands you a result. Not how you talk, not my voice. Give me the style, plus one line it might actually say.'},
+  {r:'user',  t:'Simple, concise — never big words or over-explaining. A line: "I\'ll sort through your thoughts and organize them for you."'},
+  {r:'coach', t:'That\'s the voice it will use on every run. Write just that field in markdown:\n\n```\n## Voice\n[style + one sample line]\n```'},
+  {r:'user',  t:'```\n## Voice\nSimple, concise — never use big words or over-explain.\nExample: "I\'ll sort through your thoughts and organize them for you."\n```'},
+  {r:'coach', t:'Well-formed — how it sounds, plus a real line. Paste it in, save, and tell me when it\'s done.'},
+  {r:'user',  t:'done'},
+  {r:'coach', t:'Next — a good result: when the tool hands something back, what makes you say "yes, that\'s exactly right"? Be concrete — name what you\'d look at to know it worked.'},
+  {r:'user',  t:'A well-organized action plan: thoughts linked in relational chains, the connections between them exposed, and solid, step-by-step actionable advice.'},
+  {r:'coach', t:'That\'s a checkable bar — I can look at the output and tell. Write just that field in markdown:\n\n```\n## A good result\n[your concrete standard]\n```'},
+  {r:'user',  t:'```\n## A good result\nA well-organized action plan — thoughts linked in relational chains,\nconnections exposed, and a clear step-by-step plan.\n```'},
+  {r:'coach', t:'Well-formed. Paste it in, save, and tell me when it\'s done.'},
+  {r:'user',  t:'done'},
+  {r:'coach', t:'Last field — what to avoid: name something you\'d reject on sight. The opposite of a good result.'},
+  {r:'user',  t:'Verbose, over-explained output; an overly complicated plan; action items with no note on what they accomplish; skipping the hard organizational problems.'},
+  {r:'coach', t:'That\'s the line it won\'t cross. Write just that field in markdown:\n\n```\n## Avoid\n- [things the tool should not do]\n```'},
+  {r:'user',  t:'```\n## Avoid\n- verbose language and over-explaining\n- overly complicated plan structure\n- an action item with no simple note on what it accomplishes\n- skipping the hard organizational issues\n```'},
+  {r:'coach', t:'Well-formed. Paste it in and save — that\'s your first real file done. Your tool now has an identity you wrote: who it is, what it does, how it talks, what good looks like, and what it avoids. Next we write the second file — `context.md`, the rules it uses to decide.'},
+  {r:'user',  t:'done'},
+];
+
+function dcEsc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function dcParse(raw) {
+  const blocks = [];
+  let t = raw.replace(/```[^\n]*\n([\s\S]*?)```/g, (_,c)=>{
+    const i=blocks.length; blocks.push(`<pre>${dcEsc(c.trimEnd())}</pre>`); return `\x00${i}\x00`;
+  }).replace(/```([\s\S]*?)```/g, (_,c)=>{
+    const i=blocks.length; blocks.push(`<pre>${dcEsc(c.trimEnd())}</pre>`); return `\x00${i}\x00`;
+  });
+  t = t.replace(/`([^`\n]+)`/g,'<code>$1</code>');
+  t = t.replace(/\*\*([^*\n]+)\*\*/g,'<strong>$1</strong>');
+  t = t.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
+  t = t.replace(/\x00(\d+)\x00/g,(_,i)=>blocks[+i]);
+  return t;
+}
+
+const dcWrap = document.getElementById('dcMessages');
+function dcSlp(ms){return new Promise(r=>setTimeout(r,ms))}
+function dcScroll(){dcWrap.scrollTop=dcWrap.scrollHeight}
+
+function dcAppend(role, html) {
+  const msg = document.createElement('div');
+  msg.className = `dc-msg ${role} fade-in`;
+  const label = document.createElement('div');
+  label.className = 'dc-label';
+  label.textContent = role === 'coach' ? 'Coach' : 'You';
+  const bubble = document.createElement('div');
+  bubble.className = 'dc-bubble';
+  bubble.innerHTML = html;
+  msg.appendChild(label);
+  msg.appendChild(bubble);
+  dcWrap.appendChild(msg);
+  dcScroll();
+  return msg;
+}
+
+function dcTypingIndicator() {
+  const msg = document.createElement('div');
+  msg.className = 'dc-msg coach fade-in';
+  const label = document.createElement('div');
+  label.className = 'dc-label';
+  label.textContent = 'Coach';
+  const bubble = document.createElement('div');
+  bubble.className = 'dc-bubble';
+  bubble.innerHTML = '<div class="dc-typing"><i></i><i></i><i></i></div>';
+  msg.appendChild(label);
+  msg.appendChild(bubble);
+  dcWrap.appendChild(msg);
+  dcScroll();
+  return msg;
+}
+
+async function dcRun() {
+  dcWrap.innerHTML = '';
+  for (let i = 0; i < DC_SCRIPT.length; i++) {
+    const {r, t} = DC_SCRIPT[i];
+    if (r === 'coach') {
+      const typingDelay = Math.min(2000, 600 + t.length * 1.4);
+      const indicator = dcTypingIndicator();
+      await dcSlp(typingDelay);
+      indicator.remove();
+      dcAppend('coach', dcParse(t));
+      await dcSlp(700);
+    } else {
+      await dcSlp(300);
+      dcAppend('user', dcParse(t));
+      await dcSlp(900);
+    }
+  }
+  // End: pause, fade, restart
+  await dcSlp(4000);
+  dcWrap.style.transition = 'opacity 600ms ease';
+  dcWrap.style.opacity = '0';
+  await dcSlp(660);
+  dcWrap.style.transition = '';
+  dcWrap.style.opacity = '1';
+  dcRun();
+}
+
+dcRun();
 </script>
 </body>
 </html>
