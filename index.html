@@ -564,23 +564,23 @@ async function dcRun() {
   for (let i = 0; i < DC_SCRIPT.length; i++) {
     const {r, t} = DC_SCRIPT[i];
     if (r === 'coach') {
-      const typingDelay = Math.min(3500, 1050 + t.length * 2.45);
+      const typingDelay = Math.min(7000, 2100 + t.length * 4.9);
       const indicator = dcTypingIndicator();
       await dcSlp(typingDelay);
       indicator.remove();
       dcAppend('coach', dcParse(t));
-      await dcSlp(1225);
+      await dcSlp(2450);
     } else {
-      await dcSlp(525);
+      await dcSlp(1050);
       dcAppend('user', dcParse(t));
-      await dcSlp(1575);
+      await dcSlp(3150);
     }
   }
   // End: pause, fade, restart
-  await dcSlp(7000);
-  dcWrap.style.transition = 'opacity 1050ms ease';
+  await dcSlp(14000);
+  dcWrap.style.transition = 'opacity 2100ms ease';
   dcWrap.style.opacity = '0';
-  await dcSlp(1155);
+  await dcSlp(2310);
   dcWrap.style.transition = '';
   dcWrap.style.opacity = '1';
   dcRun();
