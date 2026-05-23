@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipyard — Learn AI. Build It. Ship It.</title>
+<meta name="description" content="An AI coach that takes you from overwhelmed to a finished project. Ship your first real AI project today.">
+<meta property="og:title" content="Shipyard — Learn AI. Build It. Ship It.">
+<meta property="og:description" content="An AI coach that takes you from overwhelmed to a finished project.">
+<meta property="og:image" content="https://julianargus01.github.io/shipyard/og-image.png">
+<meta property="og:url" content="https://julianargus01.github.io/shipyard/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23E8A317'/><text x='16' y='22' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700' font-size='20'>S</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --white:#FFFFFF;--surface:#F8F7F5;--text:#1A1A2E;--text-sec:#6B7280;
+  --navy:#0F2B46;--navy-light:#1E3A5F;--amber:#E8A317;--amber-light:#F5C842;
+  --amber-dark:#C78B0A;--border:#E5E7EB;--terminal:#1E293B;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--text);background:var(--white);line-height:1.6}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:'DM Sans',sans-serif;line-height:1.2}
+
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+
+/* ===== NAV ===== */
+nav{
+  position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 24px;max-width:1100px;margin:0 auto;
+}
+.logo{font-family:'DM Sans',sans-serif;font-weight:800;font-size:20px;color:var(--navy)}
+.logo span{color:var(--amber)}
+.nav-links{display:flex;align-items:center;gap:24px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--text-sec);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{
+  background:var(--amber);color:var(--white)!important;padding:8px 20px;
+  border-radius:8px;font-weight:600;font-size:14px;transition:background .2s;
+}
+.nav-cta:hover{background:var(--amber-light)}
+
+/* ===== HERO ===== */
+.hero{padding:80px 0 60px}
+.hero-kicker{
+  font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;
+  color:var(--amber-dark);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;
+}
+.hero h1{font-size:clamp(32px,5vw,48px);font-weight:800;color:var(--text);max-width:700px;margin-bottom:20px}
+.hero-sub{font-size:18px;color:var(--text-sec);max-width:560px;margin-bottom:36px;line-height:1.7}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{
+  background:var(--amber);color:var(--white);padding:14px 28px;border-radius:10px;
+  font-weight:600;font-size:16px;transition:background .2s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary:hover{background:var(--amber-light)}
+.btn-outline{
+  border:2px solid var(--text);color:var(--text);padding:12px 28px;border-radius:10px;
+  font-weight:600;font-size:16px;transition:all .2s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-outline:hover{background:var(--text);color:var(--white)}
+
+/* ===== PROBLEM ===== */
+.problem{padding:80px 0;background:var(--surface)}
+.section-label{
+  font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;
+  color:var(--amber-dark);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;
+}
+.section-title{font-size:clamp(24px,3.5vw,36px);font-weight:800;margin-bottom:48px;max-width:600px}
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.problem-card{
+  background:var(--white);border:1px solid var(--border);border-radius:16px;
+  padding:32px;transition:transform .2s,box-shadow .2s;
+}
+.problem-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.08)}
+.problem-card .quote{
+  font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;
+  color:var(--navy);margin-bottom:16px;line-height:1.3;
+}
+.problem-card p{color:var(--text-sec);font-size:15px;line-height:1.6}
+
+/* ===== HOW IT COACHES ===== */
+.features{padding:80px 0}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px}
+.feature{
+  padding:28px;border:1px solid var(--border);border-radius:14px;
+  transition:border-color .2s;
+}
+.feature:hover{border-color:var(--amber)}
+.feature-icon{
+  width:44px;height:44px;background:var(--surface);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+  font-size:20px;
+}
+.feature h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.feature p{color:var(--text-sec);font-size:14px;line-height:1.6}
+
+/* ===== JOURNEY ===== */
+.journey{padding:80px 0;background:var(--surface)}
+.timeline{
+  display:flex;flex-wrap:wrap;gap:0;justify-content:center;
+  margin-top:48px;position:relative;
+}
+.phase{
+  flex:1;min-width:130px;max-width:160px;text-align:center;
+  position:relative;padding:0 8px;
+}
+.phase-num{
+  width:40px;height:40px;border-radius:50%;background:var(--navy);
+  color:var(--white);display:flex;align-items:center;justify-content:center;
+  font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;
+  margin:0 auto 12px;position:relative;z-index:2;
+}
+.phase-name{font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;margin-bottom:4px}
+.phase-desc{font-size:12px;color:var(--text-sec);line-height:1.4}
+.phase-connector{
+  position:absolute;top:20px;left:calc(50% + 24px);right:calc(-50% + 24px);
+  height:2px;background:var(--border);z-index:1;
+}
+.phase:last-child .phase-connector{display:none}
+
+/* ===== FOLDER MAP ===== */
+.folder-map{padding:80px 0;background:var(--terminal);color:rgba(255,255,255,0.9)}
+.folder-map .section-label{color:var(--amber)}
+.folder-map .section-title{color:var(--white)}
+.file-tree{
+  font-family:'JetBrains Mono',monospace;font-size:14px;line-height:2;
+  background:rgba(0,0,0,0.3);border-radius:12px;padding:28px 32px;
+  overflow-x:auto;
+}
+.file-tree .comment{color:var(--amber);opacity:0.8}
+.file-tree .dir{color:#93C5FD}
+.file-tree .file{color:rgba(255,255,255,0.75)}
+
+/* ===== TRY IT ===== */
+.try-it{padding:80px 0}
+.try-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.chat-embed{
+  border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.12);
+  border:1px solid var(--border);
+}
+.chat-embed iframe{width:100%;height:520px;border:none;display:block}
+.setup-panel h3{font-size:22px;font-weight:700;margin-bottom:16px}
+.setup-panel p{color:var(--text-sec);margin-bottom:20px;line-height:1.7}
+.setup-steps{list-style:none;counter-reset:steps}
+.setup-steps li{
+  counter-increment:steps;padding:12px 0;border-bottom:1px solid var(--border);
+  font-size:15px;display:flex;align-items:flex-start;gap:12px;
+}
+.setup-steps li::before{
+  content:counter(steps);background:var(--navy);color:var(--white);
+  width:28px;height:28px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;
+  font-size:13px;flex-shrink:0;
+}
+.setup-steps code{
+  font-family:'JetBrains Mono',monospace;background:var(--surface);
+  padding:2px 6px;border-radius:4px;font-size:13px;
+}
+
+/* ===== TRANSCRIPT ===== */
+.transcript{padding:80px 0;background:var(--surface)}
+.transcript-area{
+  max-width:640px;margin:48px auto 0;display:flex;flex-direction:column;gap:14px;
+}
+.t-msg{
+  max-width:85%;padding:14px 18px;border-radius:18px;font-size:15px;line-height:1.55;
+}
+.t-msg.coach{
+  background:var(--navy);color:var(--white);align-self:flex-start;
+  border-bottom-left-radius:6px;
+}
+.t-msg.user{
+  background:var(--white);color:var(--text);align-self:flex-end;
+  border-bottom-right-radius:6px;border:1px solid var(--border);
+}
+.t-label{
+  font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:600;
+  margin-bottom:4px;opacity:0.6;
+}
+.t-msg.coach .t-label{color:var(--amber)}
+.t-msg.user .t-label{color:var(--text-sec)}
+.t-note{
+  text-align:center;font-size:13px;color:var(--text-sec);font-style:italic;
+  padding:8px 0;
+}
+
+/* ===== FOOTER ===== */
+footer{background:var(--navy);color:rgba(255,255,255,0.8);padding:60px 0 40px;text-align:center}
+.footer-hook{
+  font-family:'DM Sans',sans-serif;font-size:clamp(20px,3vw,28px);
+  font-weight:700;color:var(--white);margin-bottom:8px;
+}
+.footer-hook span{color:var(--amber)}
+footer .tagline{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px}
+.footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:32px}
+.footer-links a{
+  color:var(--amber);font-weight:600;font-size:14px;transition:color .2s;
+}
+.footer-links a:hover{color:var(--amber-light)}
+.footer-meta{font-size:12px;color:rgba(255,255,255,0.3)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .hero{padding:48px 0 40px}
+  .try-grid{grid-template-columns:1fr}
+  .timeline{flex-direction:column;align-items:center;gap:16px}
+  .phase-connector{display:none!important}
+  .phase{max-width:none;width:100%;display:flex;align-items:center;gap:12px;text-align:left}
+  .phase-num{margin:0;flex-shrink:0}
+  .nav-links a:not(.nav-cta){display:none}
+  .file-tree{font-size:12px;padding:20px}
+}
+@media(max-width:480px){
+  .hero h1{font-size:28px}
+  .hero-ctas{flex-direction:column}
+  .btn-primary,.btn-outline{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">SHIPYARD<span>.</span></a>
+    <div class="nav-links">
+      <a href="https://github.com/julianargus01/shipyard" target="_blank">GitHub</a>
+      <a href="#try" class="nav-cta">Try the Coach</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-kicker">Learn AI. Build It. Ship It.</div>
+    <h1>You want to use AI, but don't know where to start?</h1>
+    <p class="hero-sub">Shipyard is an AI coach that takes you from overwhelmed to a finished project. You can do more than you think.</p>
+    <div class="hero-ctas">
+      <a href="#try" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        Try the Coach
+      </a>
+      <a href="https://github.com/julianargus01/shipyard" target="_blank" class="btn-outline">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROBLEM ===== -->
+<section class="problem">
+  <div class="container">
+    <div class="section-label">The Problem</div>
+    <h2 class="section-title">Three gaps the coach closes</h2>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="quote">"I don't know where to start."</div>
+        <p>The coach finds your edge &mdash; the thing you know that most people don't &mdash; and turns it into one specific project you can actually build.</p>
+      </div>
+      <div class="problem-card">
+        <div class="quote">"I built something but never shipped it."</div>
+        <p>The coach names the stall, cuts scope down to the smallest version that works, and pushes you to get it in front of someone today.</p>
+      </div>
+      <div class="problem-card">
+        <div class="quote">"I shipped but can't explain it."</div>
+        <p>The coach walks you through writing the story &mdash; what it does, who it's for, and why you built it &mdash; so you can show your work.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT COACHES ===== -->
+<section class="features">
+  <div class="container">
+    <div class="section-label">How It Coaches</div>
+    <h2 class="section-title">Not a chatbot. A coaching protocol.</h2>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon">&#x1F504;</div>
+        <h3>Step Protocol</h3>
+        <p>Every step follows the same loop: Teach, Assign, Review, Correct, Approve. No shortcuts, no skipping ahead.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">&#x2753;</div>
+        <h3>Socratic Correction</h3>
+        <p>When your answer misses, the coach states why &mdash; then asks one question to surface the gap. Never lectures.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">&#x1F4A1;</div>
+        <h3>Knowledge Gap Detection</h3>
+        <p>Say "I don't know" and the coach stops asking. It teaches the answer plainly, then re-assigns a simpler version.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">&#x2702;</div>
+        <h3>Scope Kill</h3>
+        <p>The moment you expand scope, the redirect IS the turn. No bundling. Cut first, teach next.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">&#x1F9F1;</div>
+        <h3>One-at-a-Time Building</h3>
+        <p>Files are built one field at a time. The coach never generates a complete artifact in one turn. You do the reps.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">&#x1F6A7;</div>
+        <h3>Gate Criteria</h3>
+        <p>Every phase has exit conditions. You can't advance until you've met them. No faking progress.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== JOURNEY ===== -->
+<section class="journey">
+  <div class="container">
+    <div class="section-label">The Journey</div>
+    <h2 class="section-title">Seven phases from overwhelmed to shipped</h2>
+    <div class="timeline">
+      <div class="phase">
+        <div class="phase-num">0</div>
+        <div>
+          <div class="phase-name">Settle</div>
+          <div class="phase-desc">Defuse overwhelm. Set the one promise.</div>
+        </div>
+        <div class="phase-connector"></div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">1</div>
+        <div>
+          <div class="phase-name">Find Your Edge</div>
+          <div class="phase-desc">Surface what makes you the right builder.</div>
+        </div>
+        <div class="phase-connector"></div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">2</div>
+        <div>
+          <div class="phase-name">Pick ONE</div>
+          <div class="phase-desc">Lock one project. Kill everything else.</div>
+        </div>
+        <div class="phase-connector"></div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">3</div>
+        <div>
+          <div class="phase-name">Define Done</div>
+          <div class="phase-desc">Lock the smallest working version.</div>
+        </div>
+        <div class="phase-connector"></div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">4</div>
+        <div>
+          <div class="phase-name">Build</div>
+          <div class="phase-desc">Coach through blockers. You build.</div>
+        </div>
+        <div class="phase-connector"></div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">5</div>
+        <div>
+          <div class="phase-name">Ship</div>
+          <div class="phase-desc">Name the stall. Push through.</div>
+        </div>
+        <div class="phase-connector"></div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">6</div>
+        <div>
+          <div class="phase-name">Show</div>
+          <div class="phase-desc">Write the story. Post it. Done.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOLDER MAP ===== -->
+<section class="folder-map">
+  <div class="container">
+    <div class="section-label">What's Inside</div>
+    <h2 class="section-title">A folder, not an app</h2>
+    <p style="color:rgba(255,255,255,0.6);margin-bottom:32px;max-width:560px">Drop these files into any AI assistant &mdash; Claude, ChatGPT, Gemini &mdash; and it becomes the Shipwright. No API keys, no setup, no code.</p>
+    <div class="file-tree">
+<span class="dir">shipyard/</span>
+├── <span class="file">identity.md</span>      <span class="comment">← who the coach is + phase routing</span>
+├── <span class="file">rules.md</span>          <span class="comment">← the 8 rules + step protocol</span>
+├── <span class="file">examples.md</span>       <span class="comment">← what good coaching sounds like</span>
+├── <span class="file">README.md</span>         <span class="comment">← setup instructions</span>
+└── <span class="dir">reference/</span>        <span class="comment">← phase-by-phase playbooks</span>
+    ├── <span class="dir">phase-0-settle/</span>
+    ├── <span class="dir">phase-1-find-your-edge/</span>
+    ├── <span class="dir">phase-2-pick-one/</span>
+    ├── <span class="dir">phase-3-define-done/</span>
+    ├── <span class="dir">phase-4-build/</span>
+    ├── <span class="dir">phase-5-ship/</span>
+    └── <span class="dir">phase-6-show/</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRY IT ===== -->
+<section class="try-it" id="try">
+  <div class="container">
+    <div class="section-label">Try It</div>
+    <h2 class="section-title">Talk to the Shipwright right now</h2>
+    <div class="try-grid">
+      <div class="chat-embed">
+        <iframe src="https://shipyard-coach.shipyard-jul.workers.dev" loading="lazy" title="Shipyard Coach Demo"></iframe>
+      </div>
+      <div class="setup-panel">
+        <h3>Set it up yourself in 2 minutes</h3>
+        <p>The live demo covers Phases 0&ndash;2. For the full 7-phase coaching experience, set up the Shipwright in your own AI assistant:</p>
+        <ol class="setup-steps">
+          <li><span>Clone the repo: <code>git clone https://github.com/julianargus01/shipyard.git</code></span></li>
+          <li><span>Open your AI assistant (Claude, ChatGPT, Gemini, etc.) and create a new project or conversation</span></li>
+          <li><span>Upload <code>identity.md</code>, <code>rules.md</code>, <code>examples.md</code>, and the entire <code>reference/</code> folder</span></li>
+          <li><span>Start a new conversation. The Shipwright takes over automatically.</span></li>
+        </ol>
+        <div style="margin-top:24px">
+          <a href="https://github.com/julianargus01/shipyard" target="_blank" class="btn-primary" style="font-size:14px;padding:12px 24px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            Get the repo
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRANSCRIPT ===== -->
+<section class="transcript">
+  <div class="container">
+    <div class="section-label">Sample Session</div>
+    <h2 class="section-title">What a real coaching session looks like</h2>
+    <div class="transcript-area">
+      <div class="t-msg coach">
+        <div class="t-label">Shipwright</div>
+        Hey! I understand you want to use AI but haven't built anything yet. Why don't we go through the process together by building something simple? I can take you through it step by step. You'll come away with some new understanding of how to build, and an actual finished project you can show off. Do you have an idea, or should we start from scratch?
+      </div>
+      <div class="t-msg user">
+        <div class="t-label">You</div>
+        Honestly I don't even know where to begin. I've watched so many YouTube videos and I'm more confused than when I started.
+      </div>
+      <div class="t-msg coach">
+        <div class="t-label">Shipwright</div>
+        Overwhelm is normal here. The problem isn't lack of ability &mdash; it's too much input and no clear starting point. Just one thing: have you had any idea rattling around, yes or no?
+      </div>
+      <div class="t-msg user">
+        <div class="t-label">You</div>
+        I mean... sort of. I've been thinking about something for restaurant owners.
+      </div>
+      <div class="t-msg coach">
+        <div class="t-label">Shipwright</div>
+        Good &mdash; that's all I need. Let's work with that.
+      </div>
+      <div class="t-note">Phase 0 complete &mdash; promise accepted, idea surfaced</div>
+      <div class="t-msg coach">
+        <div class="t-label">Shipwright</div>
+        Before we pick a project, we need to find your edge &mdash; the thing you know that most people don't. That's what makes your AI tool valuable instead of generic. We're going to find it with three questions. What's something you know how to do that most people around you do not know how to do?
+      </div>
+      <div class="t-msg user">
+        <div class="t-label">You</div>
+        I'm not sure. I've just worked in accounting for 15 years.
+      </div>
+      <div class="t-msg coach">
+        <div class="t-label">Shipwright</div>
+        That IS the answer. Most people have no idea how to read a P&L or spot a cash flow problem. You do it in your sleep. Good. Hold onto that.
+      </div>
+      <div class="t-note">The coach continues through three questions to lock a one-sentence edge, then into Phase 2 to pick and scope the project...</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-hook">SHIPYARD<span>.</span></div>
+    <div class="tagline">Learn AI. Build It. Ship It.</div>
+    <div class="footer-links">
+      <a href="https://github.com/julianargus01/shipyard" target="_blank">GitHub</a>
+      <a href="#try">Try the Coach</a>
+    </div>
+    <div class="footer-meta">MIT License &middot; Built for Clief Notes Weekly Comp #5</div>
+  </div>
+</footer>
+
+</body>
+</html>
