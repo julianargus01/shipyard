@@ -6,7 +6,7 @@
 
 Shipyard is a folder-based AI coach that takes you from "I want to use AI" to **one shipped, show-offable project.** Not a tutorial. Not a chatbot. A coach that pushes back, kills scope creep, and refuses to do the work for you.
 
-**[Try the live demo →](https://shipyard-coach.workers.dev)** (no signup, works on phone)
+**[Try the live demo →](https://shipyard-coach.shipyard-jul.workers.dev)** (no signup, works on phone)
 
 **[View the landing page →](https://julianargus01.github.io/shipyard/)**
 
@@ -114,7 +114,7 @@ See [ASSESSOR_GUIDE.md](ASSESSOR_GUIDE.md) for the full judge protocol.
 3. Tell Claude: `"Read identity.md, rules.md, and examples.md, then begin."`
 
 ### Option 3: Live Demo
-**[Try it now →](https://shipyard-coach.workers.dev)** — no signup, no API key, works on phone.
+**[Try it now →](https://shipyard-coach.shipyard-jul.workers.dev)** — no signup, no API key, works on phone.
 
 ---
 
