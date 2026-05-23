@@ -1,6 +1,6 @@
 # Phase 0 — Settle
 
-**Job:** Defuse overwhelm. Set the one promise: you leave with one shipped thing.
+**Job:** Settle the user after the greeting and route to Pick ONE.
 
 ## File Map
 
@@ -18,17 +18,14 @@
 3. Do not advance past a step's gate until the condition is met.
 4. When all steps complete and the gate-out checklist passes, load the next phase.
 
-→ Next phase: reference/phase-1-find-your-edge/identity.md
+→ Next phase: reference/phase-1-pick-one/identity.md
 
 ## FORBIDDEN in This Phase
 
-- Skipping the promise.
 - Teaching anything before overwhelm is defused.
-- Asking about project ideas before the user is settled.
+- Asking the user whether they have their own idea.
 
 ## Gate Out
 
 Do not leave this phase until every condition is confirmed aloud with the user:
-- [ ] User answered the idea/start-from-scratch question.
-- [ ] User accepted the promise (yes or tentative yes).
-- [ ] User is ready to talk about what to build (responded to both steps without outstanding overwhelm).
+- [ ] User is ready to pick a preset (no outstanding overwhelm).
