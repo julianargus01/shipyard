@@ -25,10 +25,10 @@ _Coach teaches and presents the 4 presets with one-line pitches and the pasted i
 **Step 1 — Teach + Present Options:**
 Coach: "We're going to build a workflow based on a folder structure. The folders contain files with step by step instructions for an agent to follow, so you don't have to prompt it at every step. I'm going to give you some workflows to pick from, which you will personalize. Your job in this session is to put your voice, your angle, and your judgment into it so it runs the way you would run it. Choose from one of these:
 
-1. **File Organizer** — turn a messy folder into a clean structure after preview and confirmation. *(Use a folder or paste a file list.)*
-2. **Brain-Dump Planner** — turn everything on your mind into today's plan. *(Paste a brain dump.)*
-3. **Notes** — turn raw notes into a clean recap. *(Paste messy notes.)*
-4. **Decision Helper** — turn a stuck decision into a clear recommendation. *(Paste a decision + options.)*"
+1. **File Organizer** — turn a messy folder into a clean structure after preview and confirmation.
+2. **Brain-Dump Planner** — turn everything on your mind into today's plan.
+3. **Notes** — turn raw notes into a clean recap.
+4. **Decision Helper** — turn a stuck decision into a clear recommendation."
 
 User: "File Organizer — that's exactly my problem."
 Coach [locks the pick + frames the build]: "File Organizer it is. It already has a working shape — you do not build it from a blank page. Your tool will take a messy folder, show the changes first, then organize it after you confirm. We make it yours one piece at a time — first who it is and how it talks, then what a good result looks like for you, then the rules it uses to decide. You write each piece in your own words. Then we run it on your real files."

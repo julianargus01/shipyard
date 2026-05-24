@@ -21,7 +21,7 @@ You pick one of four practice builds: **File Organizer**, **Brain-Dump Planner**
 
 ## What You Need
 
-1. **Claude Code or Codex** — open this folder as a project (instructions below).
+1. **Claude or Codex** — open this folder as a project.
 2. **A plain-text editor** that can save `.md` files.
    - On Mac: open TextEdit, go to **Format → Make Plain Text**, and when you save, type the filename ending in `.md` — not `.rtf`.
    - Any other plain-text editor (VS Code, Notepad, etc.) works fine.
@@ -32,7 +32,7 @@ You pick one of four practice builds: **File Organizer**, **Brain-Dump Planner**
 
 ## How to Start
 
-1. Open this `shipyard` folder as your project in Claude Code or Codex.
+1. Open this `shipyard` folder as your project in Claude or Codex.
 2. Say hello — the Coach greets you and takes it from there.
 
 That is the whole setup; the Coach loads itself.
@@ -51,7 +51,7 @@ Each session starts fresh — just open the folder and say hello again.
 |-------|-------------|
 | 0 — Settle | Say hello. The Coach gets a feel for where you're starting from. |
 | 1 — Pick ONE | Choose one of four preset tools. |
-| 2 — Build the core files | You write your tool's two files with the Coach, one field at a time. |
+| 2 — Build the core files | You write your tool's files with the Coach, one field at a time. |
 | 3 — Run it | The Coach runs your tool on your real input so you can see it work. |
 | 4 — Ship | Confirm it works. The Coach declares it done. |
 | 5 — Show | Optional: write a short description so you can share or explain it. |
@@ -64,6 +64,7 @@ These are the Shipyard system files — the Coach reads them; you don't need to 
 
 | File / Folder | What it does |
 |---------------|-------------|
+| `CLAUDE.md` / `AGENTS.md` | Auto-load pointers — make Claude or Codex become the Coach on open. |
 | `identity.md` | Loads the Coach and routes it through each stage. |
 | `rules.md` | The coaching rules — how the Coach behaves, what it never skips. |
 | `examples.md` | Examples of good coaching at each stage. |
@@ -75,4 +76,4 @@ These are the Shipyard system files — the Coach reads them; you don't need to 
 
 ## Portable and Reusable
 
-Everything is plain markdown. The tool you build works in any Claude Code or Codex project — just drop your project files into a new project and it runs. No installs, no accounts, no lock-in.
+Everything is plain markdown. The tool you build works in any Claude or Codex project — just drop your project files into a new project and it runs. No installs, no accounts, no lock-in.
